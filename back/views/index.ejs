@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <title>Document</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Sriracha&display=swap");
+      body {
+        background-image: url(https://www.greenbiz.com/sites/default/files/styles/og_image_1200x630/public/2021-07/Smallbiz-bigbiz.jpg?itok=XHQdrJMU);
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-attachment: fixed;
+        font-family: "Sriracha", sans-serif;
+      }
+      #page-title {
+        text-shadow: 2px 0 whitesmoke, -2px 0 whitesmoke, 0 2px whitesmoke,
+          0 -2px whitesmoke, 1px 1px whitesmoke, -1px -1px whitesmoke,
+          -1px 1px grey, 1px -1px grey;
+      }
+      #fullUrl {
+        background-color: rgb(243, 237, 237, 26%);
+        border: 1px solid grey;
+      }
+      #button {
+        color: white;
+        background-color: rgba(12, 11, 11, 20%);
+      }
+      #button:hover {
+        background-color: rgb(243, 237, 237, 30%);
+        color: rgb(73, 69, 58);
+      }
+      .remove:hover,
+      .reset:hover {
+        background-color: rgb(243, 237, 237, 30%);
+        color: rgb(73, 69, 58);
+        border-radius: 14px;
+      }
+      .lines {
+        line-height: 2rem;
+      }
+      table {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 id="page-title" style="text-align: center">URL Shrinker</h1>
+      <form action="/shortUrls" method="POST" class="my-4 form-inline">
+        <label for="fullUrl" class="sr-only">Url</label>
+        <input
+          autocomplete="off"
+          required
+          placeholder="Url"
+          type="url"
+          name="fullUrl"
+          id="fullUrl"
+          class="form-control col mr-2"
+        />
+        <button class="btn btn-lg" type="submit" id="button">Shrink</button>
+      </form>
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <table class="table table-striped table-responsive">
+            <thead>
+              <tr>
+                <th>Full URL</th>
+                <th>Short URL</th>
+                <th>Clicks</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% shortUrls.forEach(shortUrl => { %>
+              <tr class="userUrls">
+                <td><a href="<%= shortUrl.full %>"><%= shortUrl.full %></a></td>
+                <td>
+                  <a href="<%= shortUrl.short %>"><%= shortUrl.short %></a>
+                </td>
+                <td><%= shortUrl.clicks %></td>
+                <form action="/clearone/<%= shortUrl.short %>" method="GET">
+                  <td>
+                    <button type="submit" class="btn border-0 remove">
+                      ❌
+                    </button>
+                  </td>
+                </form>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          <div class="text-center">
+            <form action="/clear" method="GET">
+              <button class="btn btn-lg reset">Reset</button>
+            </form>
+            <form action="/logout" method="GET">
+              <button type="submit" class="btn btn-lg" id="prizeButton">
+                Logout
+              </button>
+            </form>
+            <form action="/prize" method="GET">
+              <button type="submit" class="btn btn-lg" id="prizeButton">
+                Prize!
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
